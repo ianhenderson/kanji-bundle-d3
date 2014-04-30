@@ -3,7 +3,7 @@
 <style>
 
 .node {
-  font: 11px "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .link {
@@ -18,7 +18,7 @@
 <!-- <script src="kanjilist.js"></script> -->
 <script>
 
-var diameter = 960,
+var diameter = 10860,
     radius = diameter / 2,
     innerRadius = radius - 120;
 
@@ -31,7 +31,7 @@ var bundle = d3.layout.bundle();
 
 var line = d3.svg.line.radial()
     .interpolate("bundle")
-    .tension(.95)
+    .tension(.05)
     .radius(function(d) { return d.y; })
     .angle(function(d) { return d.x / 180 * Math.PI; });
 
@@ -62,7 +62,7 @@ d3.json("kanji2.json", function(error, classes) {
       .attr("dy", ".31em")
       .attr("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
       .attr("transform", function(d) { return d.x < 180 ? null : "rotate(180)"; })
-      .text(function(d) { return d.key; });
+      .text(function(d) { return (d.key); });
 });
 
 d3.select(self.frameElement).style("height", diameter + "px");
