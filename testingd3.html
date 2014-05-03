@@ -3,8 +3,8 @@
 <style>
 
 .node {
-  font: 10px "Helvetica Neue", Helvetica, Arial, sans-serif;
-  fill: #bbb;
+  font: 12px MS Gothic, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  /*fill: #bbb;*/
 }
 
 .node:hover {
@@ -43,16 +43,15 @@
 }
 
 .link--target {
-  stroke: #2ca02c;
+  stroke: #d62728;
 }
 
 </style>
 <body>
 <script src="d3.js"></script>
-<!-- <script src="kanjilist.js"></script> -->
 <script>
 
-var diameter = 1860,
+var diameter = 1460,
     radius = diameter / 2,
     innerRadius = radius - 120;
 
@@ -65,7 +64,7 @@ var bundle = d3.layout.bundle();
 
 var line = d3.svg.line.radial()
     .interpolate("bundle")
-    .tension(.05)
+    .tension(.65)
     .radius(function(d) { return d.y; })
     .angle(function(d) { return d.x / 180 * Math.PI; });
 
@@ -93,10 +92,10 @@ d3.json("kanji2.json", function(error, classes) {
       .data(nodes.filter(function(n) { return !n.children; }))
     .enter().append("text")
       .attr("class", "node")
-      .attr("dy", ".31em")
+      // .attr("dy", ".1em")
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
       .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-      .text(function(d) { return d.key; })
+      .text(function(d,i) { return ( i % 5 === 0 ? d.kanji: ''); })
       .on("mouseover", mouseovered)
       .on("mouseout", mouseouted);
 
@@ -146,7 +145,7 @@ function packageHierarchy(classes) {
   }
 
   classes.forEach(function(d) {
-    find(d.name, d);
+    find(d.kanji, d);
   });
 
   return map[""];
@@ -159,13 +158,13 @@ function packageImports(nodes) {
 
   // Compute a map from name to node.
   nodes.forEach(function(d) {
-    map[d.name] = d;
+    map[d.kanji] = d;
   });
 
   // For each import, construct a link from the source to target node.
   nodes.forEach(function(d) {
-    if (d.imports) d.imports.forEach(function(i) {
-      imports.push({source: map[d.name], target: map[i]});
+    if (d.siblings) d.siblings.forEach(function(i) {
+      imports.push({source: map[d.kanji], target: map[i]});
     });
   });
 
