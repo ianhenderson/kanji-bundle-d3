@@ -39,9 +39,6 @@
   stroke: #d62728;
 }
 
-.link--source {
-}
-
 .link--target {
   stroke: #d62728;
 }
@@ -64,7 +61,7 @@ var bundle = d3.layout.bundle();
 
 var line = d3.svg.line.radial()
     .interpolate("bundle")
-    .tension(0.85)
+    .tension(0.25)
     .radius(function(d) { return d.y; })
     .angle(function(d) { return d.x / 180 * Math.PI; });
 
@@ -136,7 +133,7 @@ function packageHierarchy(classes) {
     if (!node) {
       node = map[name] = data || {name: name, children: []};
       if (name.length) {
-        node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+        node.parent = find(name.substring(0, i = 1));
         node.parent.children.push(node);
         node.key = name.substring(i + 1);
       }
