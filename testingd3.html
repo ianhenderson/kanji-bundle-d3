@@ -64,7 +64,7 @@ var bundle = d3.layout.bundle();
 
 var line = d3.svg.line.radial()
     .interpolate("bundle")
-    .tension(.65)
+    .tension(.85)
     .radius(function(d) { return d.y; })
     .angle(function(d) { return d.x / 180 * Math.PI; });
 
@@ -95,7 +95,7 @@ d3.json("kanji2.json", function(error, classes) {
       // .attr("dy", ".1em")
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
       .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-      .text(function(d,i) { return ( i % 5 === 0 ? d.kanji: ''); })
+      .text(function(d,i) { return ( i % 2 === 0 ? d.kanji: ''); })
       .on("mouseover", mouseovered)
       .on("mouseout", mouseouted);
 

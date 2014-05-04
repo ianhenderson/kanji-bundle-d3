@@ -29,12 +29,12 @@ var kanjijsonbuilder = function(kanjilist){
   // Now, take data from temp and put it in a format
   // suitable for the d3 bundle layout.
   for (var key in temp){
-    if ( temp[key].length > 1 ){
+    // if ( temp[key].length > 0 ){
       kanjijson.push({
         kanji: key,
         siblings: temp[key]
       });
-    }
+    // }
   }
   return kanjijson;
 };
