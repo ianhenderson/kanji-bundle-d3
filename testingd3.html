@@ -4,11 +4,7 @@
 
 .node {
   font: 12px MS Gothic, "Helvetica Neue", Helvetica, Arial, sans-serif;
-  /*fill: #bbb;*/
-}
-
-.node:hover {
-  fill: #000;
+  fill: #bbb;
 }
 
 .link {
@@ -16,34 +12,6 @@
   stroke-opacity: .4;
   fill: none;
   pointer-events: none;
-}
-
-.node:hover,
-.node--source,
-.node--target {
-  font-weight: 700;
-}
-
-.node--source {
-  fill: #2ca02c;
-}
-
-.node--target {
-  fill: #d62728;
-}
-
-.link--source,
-.link--target {
-  stroke-opacity: 1;
-  stroke-width: 2px;
-}
-
-.link--source {
-  stroke: #d62728;
-}
-
-.link--target {
-  stroke: #d62728;
 }
 
 </style>
@@ -95,7 +63,7 @@ d3.json("kanji2.json", function(error, classes) {
       // .attr("dy", ".1em")
       .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + (d.y + 8) + ",0)" + (d.x < 180 ? "" : "rotate(180)"); })
       .style("text-anchor", function(d) { return d.x < 180 ? "start" : "end"; })
-      .text(function(d,i) { return ( i % 2 === 0 ? d.kanji: ''); })
+      .text(function(d,i) { return ( i % 1 === 0 ? d.kanji: ''); })
       .on("mouseover", mouseovered)
       .on("mouseout", mouseouted);
 
@@ -136,7 +104,7 @@ function packageHierarchy(classes) {
     if (!node) {
       node = map[name] = data || {name: name, children: []};
       if (name.length) {
-        node.parent = find(name.substring(0, i = name.lastIndexOf(".")));
+        node.parent = find(name.substring(0, i = name.length - 2));
         node.parent.children.push(node);
         node.key = name.substring(i + 1);
       }
